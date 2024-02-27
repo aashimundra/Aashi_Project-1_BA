@@ -1,0 +1,820 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "50e77846-bf36-43be-bf3b-e89f71aff72d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "93465891-5735-485f-8bdf-96d40215f187",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.read_pickle(r\"shared/Motor_Vehicle_Collisions_-_Crashes.pkl\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "b700478f-b844-46cc-af54-702a16ad0879",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>CRASH DATE_CRASH TIME</th>\n",
+       "      <th>BOROUGH</th>\n",
+       "      <th>ZIP CODE</th>\n",
+       "      <th>LATITUDE</th>\n",
+       "      <th>LONGITUDE</th>\n",
+       "      <th>LOCATION</th>\n",
+       "      <th>ON STREET NAME</th>\n",
+       "      <th>CROSS STREET NAME</th>\n",
+       "      <th>OFF STREET NAME</th>\n",
+       "      <th>NUMBER OF PERSONS INJURED</th>\n",
+       "      <th>...</th>\n",
+       "      <th>CONTRIBUTING FACTOR VEHICLE 2</th>\n",
+       "      <th>CONTRIBUTING FACTOR VEHICLE 3</th>\n",
+       "      <th>CONTRIBUTING FACTOR VEHICLE 4</th>\n",
+       "      <th>CONTRIBUTING FACTOR VEHICLE 5</th>\n",
+       "      <th>COLLISION_ID</th>\n",
+       "      <th>VEHICLE TYPE CODE 1</th>\n",
+       "      <th>VEHICLE TYPE CODE 2</th>\n",
+       "      <th>VEHICLE TYPE CODE 3</th>\n",
+       "      <th>VEHICLE TYPE CODE 4</th>\n",
+       "      <th>VEHICLE TYPE CODE 5</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2021-09-11 02:39:00</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>WHITESTONE EXPRESSWAY</td>\n",
+       "      <td>20 AVENUE</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>Unspecified</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>4455765</td>\n",
+       "      <td>Sedan</td>\n",
+       "      <td>Sedan</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2022-03-26 11:45:00</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>QUEENSBORO BRIDGE UPPER</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>4513547</td>\n",
+       "      <td>Sedan</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2022-06-29 06:55:00</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>THROGS NECK BRIDGE</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>Unspecified</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>4541903</td>\n",
+       "      <td>Sedan</td>\n",
+       "      <td>Pick-up Truck</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2021-09-11 09:35:00</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>11208.0</td>\n",
+       "      <td>40.667202</td>\n",
+       "      <td>-73.866500</td>\n",
+       "      <td>(40.667202, -73.8665)</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>1211      LORING AVENUE</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>4456314</td>\n",
+       "      <td>Sedan</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2021-12-14 08:13:00</td>\n",
+       "      <td>BROOKLYN</td>\n",
+       "      <td>11233.0</td>\n",
+       "      <td>40.683304</td>\n",
+       "      <td>-73.917274</td>\n",
+       "      <td>(40.683304, -73.917274)</td>\n",
+       "      <td>SARATOGA AVENUE</td>\n",
+       "      <td>DECATUR STREET</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>4486609</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5 rows × 28 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  CRASH DATE_CRASH TIME   BOROUGH ZIP CODE   LATITUDE  LONGITUDE  \\\n",
+       "0   2021-09-11 02:39:00       NaN      NaN        NaN        NaN   \n",
+       "1   2022-03-26 11:45:00       NaN      NaN        NaN        NaN   \n",
+       "2   2022-06-29 06:55:00       NaN      NaN        NaN        NaN   \n",
+       "3   2021-09-11 09:35:00  BROOKLYN  11208.0  40.667202 -73.866500   \n",
+       "4   2021-12-14 08:13:00  BROOKLYN  11233.0  40.683304 -73.917274   \n",
+       "\n",
+       "                  LOCATION           ON STREET NAME CROSS STREET NAME  \\\n",
+       "0                      NaN    WHITESTONE EXPRESSWAY         20 AVENUE   \n",
+       "1                      NaN  QUEENSBORO BRIDGE UPPER               NaN   \n",
+       "2                      NaN       THROGS NECK BRIDGE               NaN   \n",
+       "3    (40.667202, -73.8665)                      NaN               NaN   \n",
+       "4  (40.683304, -73.917274)          SARATOGA AVENUE    DECATUR STREET   \n",
+       "\n",
+       "           OFF STREET NAME  NUMBER OF PERSONS INJURED  ...  \\\n",
+       "0                      NaN                        2.0  ...   \n",
+       "1                      NaN                        1.0  ...   \n",
+       "2                      NaN                        0.0  ...   \n",
+       "3  1211      LORING AVENUE                        0.0  ...   \n",
+       "4                      NaN                        0.0  ...   \n",
+       "\n",
+       "   CONTRIBUTING FACTOR VEHICLE 2  CONTRIBUTING FACTOR VEHICLE 3  \\\n",
+       "0                    Unspecified                            NaN   \n",
+       "1                            NaN                            NaN   \n",
+       "2                    Unspecified                            NaN   \n",
+       "3                            NaN                            NaN   \n",
+       "4                            NaN                            NaN   \n",
+       "\n",
+       "   CONTRIBUTING FACTOR VEHICLE 4  CONTRIBUTING FACTOR VEHICLE 5  COLLISION_ID  \\\n",
+       "0                            NaN                            NaN       4455765   \n",
+       "1                            NaN                            NaN       4513547   \n",
+       "2                            NaN                            NaN       4541903   \n",
+       "3                            NaN                            NaN       4456314   \n",
+       "4                            NaN                            NaN       4486609   \n",
+       "\n",
+       "   VEHICLE TYPE CODE 1  VEHICLE TYPE CODE 2 VEHICLE TYPE CODE 3  \\\n",
+       "0                Sedan                Sedan                 NaN   \n",
+       "1                Sedan                  NaN                 NaN   \n",
+       "2                Sedan        Pick-up Truck                 NaN   \n",
+       "3                Sedan                  NaN                 NaN   \n",
+       "4                  NaN                  NaN                 NaN   \n",
+       "\n",
+       "  VEHICLE TYPE CODE 4 VEHICLE TYPE CODE 5  \n",
+       "0                 NaN                 NaN  \n",
+       "1                 NaN                 NaN  \n",
+       "2                 NaN                 NaN  \n",
+       "3                 NaN                 NaN  \n",
+       "4                 NaN                 NaN  \n",
+       "\n",
+       "[5 rows x 28 columns]"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.head() # getting an insight of the data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "41e87a43-5681-483d-ac6e-cc23bd0eb2a1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "crashes_by_borough = df['BOROUGH'].value_counts(dropna=True) # finding out borough wise crashes and ignoring the null values"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "d7b62018-3444-4532-a9dd-c3a12e06fd38",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "crashes_by_borough_sorted = crashes_by_borough.sort_values(ascending=False) # sorting the crashes by borough in descending order"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "e46905ed-d368-4c75-92e4-f10f3188cec0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "second_highest_borough = crashes_by_borough_sorted.index[1]  # extracting the second highest borough with crashes\n",
+    "second_highest_crashes = crashes_by_borough_sorted.iloc[1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "f834628a-1422-4551-b8b1-14445ab3cf58",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The borough with the second highest number of crashes is QUEENS, with 372457 crashes.\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"The borough with the second highest number of crashes is {second_highest_borough}, with {second_highest_crashes} crashes.\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "e8292ff7-022c-43fe-9bb8-55dcb26e901e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "populations = {\n",
+    "    'BRONX': 1446788,\n",
+    "    'BROOKLYN': 2648452,\n",
+    "    'MANHATTAN': 1638281,\n",
+    "    'QUEENS': 2330295,\n",
+    "    'STATEN ISLAND': 487155\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "8e0fe6f8-42fe-4867-8ead-425adf82a64a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "crashes_per_100k = {\n",
+    "    borough: (crashes_by_borough.get(borough, 0) / populations[borough]) * 100000\n",
+    "    for borough in populations\n",
+    "} # calculating the number of crashes per 100000 people"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "98eb3349-f13f-432a-abb1-6250452946e4",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "2a64c25c-33da-4709-a420-c6cefed5fc9b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The borough with the most crashes for every 100,000 people is MANHATTAN, with a rate of 19121.63.\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"The borough with the most crashes for every 100,000 people is {max_crashes_borough}, with a rate of {max_crashes_rate:.2f}.\")# showing the data with exactly 2 decimal places"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "53ba20d8-d0f0-43f5-8129-dea4bf702646",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "specified_factors_df = df[df['CONTRIBUTING FACTOR VEHICLE 1'] != 'Unspecified']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "060434b0-7569-4fde-9b36-068da5b8e25a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "leading_cause_series = specified_factors_df['CONTRIBUTING FACTOR VEHICLE 1'].value_counts() #a series of each unique value in that column is been counted\n",
+    "leading_cause = leading_cause_series.idxmax() # To calculate the leading contributing factor for vehicle collision and the count of attributes related to that collision\n",
+    "leading_cause_count = leading_cause_series.max() "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "957ef671-d14b-4dfe-8b6e-068810a6918c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "total_specified_accidents = specified_factors_df['CONTRIBUTING FACTOR VEHICLE 1'].count() #total number of contributuing factors "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "1a03b067-734d-4229-ae96-69346dbb6f5c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "proportion_of_accidents = leading_cause_count / total_specified_accidents"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "7c5a1441-55d0-460c-94ae-642fad10d387",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The leading cause of crashes is 'Driver Inattention/Distraction' with 401262 crashes,\n",
+      "which represents 30.42% of the accidents with a specified contributing factor.\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"The leading cause of crashes is '{leading_cause}' with {leading_cause_count} crashes,\")\n",
+    "print(f\"which represents {proportion_of_accidents:.2%} of the accidents with a specified contributing factor.\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "3a0f9bf0-b4aa-48a7-9603-8b200740fa5c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "top_5_causes = leading_cause_series.head(5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "1e0b58b3-377a-4818-94c8-9ead2d961dfa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "top_5_crashes_total = top_5_causes.sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "56cf8ca1-0876-4256-9c38-ed0eaeb7f5bb",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Top 5 causes of crashes:\n",
+      "CONTRIBUTING FACTOR VEHICLE 1\n",
+      "Driver Inattention/Distraction    401262\n",
+      "Failure to Yield Right-of-Way     119166\n",
+      "Following Too Closely             107467\n",
+      "Backing Unsafely                   75042\n",
+      "Other Vehicular                    62688\n",
+      "Name: count, dtype: int64\n",
+      "\n",
+      "The top 5 causes account for 57.76% of all specified crashes.\n"
+     ]
+    }
+   ],
+   "source": [
+    "total_specified_crashes = specified_factors_df.shape[0]\n",
+    "top_5_proportion = top_5_crashes_total / total_specified_crashes\n",
+    "\n",
+    "# the top 5 causes and their proportion of total specified crashes\n",
+    "print(\"Top 5 causes of crashes:\")\n",
+    "print(top_5_causes)\n",
+    "print(f\"\\nThe top 5 causes account for {top_5_proportion:.2%} of all specified crashes.\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "6ff3c82c-14c6-4f64-b0b4-d17274faea93",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Replacing missing values in 'NUMBER OF PERSONS KILLED' column with 0\n",
+    "df['NUMBER OF PERSONS KILLED'] = df['NUMBER OF PERSONS KILLED'].fillna(0)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "451d0793-88b5-40b5-b771-6fac436549f3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "88"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Filtering for accidents with two or more fatalities\n",
+    "accidents_with_two_or_more_fatalities = df[df['NUMBER OF PERSONS KILLED'] >= 2]\n",
+    "\n",
+    "# total count of such accidents\n",
+    "total_count = accidents_with_two_or_more_fatalities.shape[0]\n",
+    "\n",
+    "total_count"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "426c8e53-4e94-40e2-a860-fbb8e92ed323",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1.3893258747079764"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#the average number of accidents causing at least one death per 1000 accidents\n",
+    "accidents_with_deaths = df[df['NUMBER OF PERSONS KILLED'] >= 1].shape[0]\n",
+    "total_accidents = df.shape[0]\n",
+    "\n",
+    "# Calculating the ratio and multiplying it by 1000 to find the average per 1000 accidents\n",
+    "average_deaths_per_1000_accidents = (accidents_with_deaths / total_accidents) * 1000\n",
+    "\n",
+    "average_deaths_per_1000_accidents"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "12866d3d-5d9a-4e2a-b5fc-5c1d9f7b0332",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "37.4350983156158"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# the proportion of accidents without a Cross Street Name\n",
+    "proportion_no_cross_street = (df['CROSS STREET NAME'].isnull().sum() / len(df)) * 100\n",
+    "\n",
+    "proportion_no_cross_street"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "75eb8174-47ba-482b-a83c-743faeb811d4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>VEHICLE TYPE CODE 1</th>\n",
+       "      <th>VEHICLE TYPE CODE 2</th>\n",
+       "      <th>counts</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>3948</th>\n",
+       "      <td>Sedan</td>\n",
+       "      <td>Sedan</td>\n",
+       "      <td>197944</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     VEHICLE TYPE CODE 1 VEHICLE TYPE CODE 2  counts\n",
+       "3948               Sedan               Sedan  197944"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Counting the most common combinations of the two columns namely 'VEHICLE TYPE CODE 1' and 'VEHICLE TYPE CODE 2'\n",
+    "vehicle_combinations = df.groupby(['VEHICLE TYPE CODE 1', 'VEHICLE TYPE CODE 2']).size().reset_index(name='counts')\n",
+    "\n",
+    "# Identifying the combination with the most accidents that happened\n",
+    "most_common_combination = vehicle_combinations.sort_values(by='counts', ascending=False).head(1)\n",
+    "\n",
+    "most_common_combination"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "ceb8477b-2a90-4bd9-a5bd-8aaacbe8e3a9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(101, 21656, 0.0046638345031400075)"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Using the given assumptions that 'Alcohol Involvement' is a contributing factor and using the 'NUMBER OF PERSONS KILLED' field\n",
+    "# Filtering the dataset which consist of 'Alcohol Involvement' crashes\n",
+    "alcohol_involved_crashes = df[df['CONTRIBUTING FACTOR VEHICLE 1'] == 'Alcohol Involvement']\n",
+    "\n",
+    "# Calculating the number of crashes  that resulted in at least one fatality\n",
+    "fatal_alcohol_crashes = alcohol_involved_crashes[alcohol_involved_crashes['NUMBER OF PERSONS KILLED'] > 0].shape[0]\n",
+    "\n",
+    "# the total number of alcohol-involved crashes\n",
+    "total_alcohol_crashes = alcohol_involved_crashes.shape[0]\n",
+    "\n",
+    "# the proportion of alcohol-involved crashes which resulted in fatalities\n",
+    "proportion_fatal_alcohol_crashes = fatal_alcohol_crashes / total_alcohol_crashes if total_alcohol_crashes > 0 else 0\n",
+    "\n",
+    "fatal_alcohol_crashes, total_alcohol_crashes, proportion_fatal_alcohol_crashes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "id": "2fcace27-6e62-44cd-b427-5751807030e8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Index(['CRASH DATE_CRASH TIME', 'BOROUGH', 'ZIP CODE', 'LATITUDE', 'LONGITUDE',\n",
+      "       'LOCATION', 'ON STREET NAME', 'CROSS STREET NAME', 'OFF STREET NAME',\n",
+      "       'NUMBER OF PERSONS INJURED', 'NUMBER OF PERSONS KILLED',\n",
+      "       'NUMBER OF PEDESTRIANS INJURED', 'NUMBER OF PEDESTRIANS KILLED',\n",
+      "       'NUMBER OF CYCLIST INJURED', 'NUMBER OF CYCLIST KILLED',\n",
+      "       'NUMBER OF MOTORIST INJURED', 'NUMBER OF MOTORIST KILLED',\n",
+      "       'CONTRIBUTING FACTOR VEHICLE 1', 'CONTRIBUTING FACTOR VEHICLE 2',\n",
+      "       'CONTRIBUTING FACTOR VEHICLE 3', 'CONTRIBUTING FACTOR VEHICLE 4',\n",
+      "       'CONTRIBUTING FACTOR VEHICLE 5', 'COLLISION_ID', 'VEHICLE TYPE CODE 1',\n",
+      "       'VEHICLE TYPE CODE 2', 'VEHICLE TYPE CODE 3', 'VEHICLE TYPE CODE 4',\n",
+      "       'VEHICLE TYPE CODE 5'],\n",
+      "      dtype='object')\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(df.columns)\n",
+    "#finding the names of the columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "id": "66b2155e-7aed-468f-bc95-28bb9931dd2c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "20.514010935243242"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['CRASH DATE_CRASH TIME'] = pd.to_datetime(df['CRASH DATE_CRASH TIME'])\n",
+    "\n",
+    "# calculating the crashes occurring between 4 PM (16:00) and before 7 PM (19:00)\n",
+    "evening_rush_hour_crashes = df[(df['CRASH DATE_CRASH TIME'].dt.hour >= 16) & (df['CRASH DATE_CRASH TIME'].dt.hour < 19)]\n",
+    "\n",
+    "# Calculate the proportion\n",
+    "total_crashes = len(df)\n",
+    "evening_rush_hour_crashes_count = len(evening_rush_hour_crashes)\n",
+    "proportion = evening_rush_hour_crashes_count / total_crashes * 100\n",
+    "\n",
+    "proportion"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "7baedfc6-ff0e-476a-bb94-4d4fb7160e1f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "50.04565018912221"
+      ]
+     },
+     "execution_count": 35,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Filtering the dataset for crashes involving motorcycles\n",
+    "motorcycle_crashes = df[(df['VEHICLE TYPE CODE 1'].str.contains('MOTORCYCLE', na=False)) | \n",
+    "                         (df['VEHICLE TYPE CODE 2'].str.contains('MOTORCYCLE', na=False))]\n",
+    "\n",
+    "# Finding out the cases where injuries are greater than 0 and fatalities are equal to 0\n",
+    "injuries_no_fatalities = motorcycle_crashes[(motorcycle_crashes['NUMBER OF PERSONS INJURED'] > 0) & \n",
+    "                                            (motorcycle_crashes['NUMBER OF PERSONS KILLED'] == 0)]\n",
+    "\n",
+    "# Calculate the proportion\n",
+    "total_motorcycle_crashes = len(motorcycle_crashes)\n",
+    "injuries_no_fatalities_count = len(injuries_no_fatalities)\n",
+    "proportion = injuries_no_fatalities_count / total_motorcycle_crashes * 100\n",
+    "\n",
+    "proportion"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "fc5dae1d-47be-47b4-be8d-e3f81575f7e3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "19108"
+      ]
+     },
+     "execution_count": 36,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Count the number of crashes where vehicle type is 'BICYCLE'\n",
+    "bicycle_crashes = df[(df['VEHICLE TYPE CODE 1'].str.contains('BICYCLE', na=False)) | \n",
+    "                     (df['VEHICLE TYPE CODE 2'].str.contains('BICYCLE', na=False))]\n",
+    "\n",
+    "# Getting the total count of crashes which involves bicycles\n",
+    "total_bicycle_crashes = len(bicycle_crashes)\n",
+    "\n",
+    "total_bicycle_crashes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "406a2fd7-7b71-422b-9944-c0d041f94a72",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:mggy8413]",
+   "language": "python",
+   "name": "conda-env-mggy8413-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
